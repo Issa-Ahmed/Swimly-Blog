@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+.overlay {
+  box-shadow: inset 0 0 0 2000px rgba(6, 38, 42, 0.3);
+}
+
