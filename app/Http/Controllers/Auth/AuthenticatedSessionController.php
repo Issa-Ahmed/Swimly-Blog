@@ -28,7 +28,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+
         $request->authenticate();
+
+        if (Auth::user()->is_author) {
+            return redirect('/dashboard');
+        }
 
         $request->session()->regenerate();
 

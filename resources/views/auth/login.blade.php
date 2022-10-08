@@ -2,7 +2,7 @@
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                <x-application-logo class="w-20 h-20 fill-current text-teal-500" />
             </a>
         </x-slot>
 
@@ -16,7 +16,7 @@
             <div>
                 <x-input-label for="email" :value="__('Email')" />
 
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+                <x-text-input id="email" class="block  mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
 
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
             </div>
