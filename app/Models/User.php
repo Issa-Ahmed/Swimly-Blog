@@ -44,6 +44,6 @@ class User extends Authenticatable
 
     public function article()
     {
-        return $this->belongsTo(Article::class);
+        return $this->hasOne(Article::class);
     }
 }

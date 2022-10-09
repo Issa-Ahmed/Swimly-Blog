@@ -3,47 +3,46 @@
 namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArticleRequest;
+use App\Models\Article;
+use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        return view('author.articles.index');
+        $articles = Article::orderByDesc('created_at')->paginate(5);
+        return view('author.articles.index', compact('articles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('author.articles.create', compact('categories','tags'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
-        //
+        
+        $image = $request->file('image')->store('public/thumbnails');
+        $article = Article::create([
+            'user_id'=>auth()->user()->id,
+            'title'=>$request->title,
+            'image'=>$image,
+            'post'=>$request->post,
+            'category_id'=>$request->category_id
+        ]);
+
+        $tag = Tag::find($request->tag_id);
+        $article->tags()->attach($tag);
+
+       return redirect('dashboard/articles')->with('message','Article has been published successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
@@ -55,9 +54,11 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('author.articles.edit', compact('article','categories','tags'));
     }
 
     /**

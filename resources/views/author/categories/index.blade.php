@@ -10,6 +10,9 @@
             <thead class="text- text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="py-3 px-6">
+                        #
+                    </th>
+                    <th scope="col" class="py-3 px-6">
                         Category name
                     </th>
                     <th scope="col" class="py-3 px-6">
@@ -23,6 +26,9 @@
             <tbody>
                 @foreach ($categories as $category)
                 <tr class="bg-white border-t border-black text-black">
+                    <td class="py-4 px-6">
+                        {{$category->id}}
+                    </td>
                     <td class="py-4 px-6">
                         {{$category->title}}
                     </td>
