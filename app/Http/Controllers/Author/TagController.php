@@ -4,83 +4,60 @@ namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Tag;
 
 class TagController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view('author.tags.index');
+        $tags = Tag::orderByDesc('created_at')->paginate(5);
 
+        return view('author.tags.index' , compact('tags'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('author.tags.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=> 'required|unique:tags'
+        ]);
+
+        Tag::create([
+            'name'=> $request->name
+        ]);
+
+        return redirect('dashboard/tags')->with('message', 'Tag Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+   
+    
+    public function edit(Tag $tag)
     {
-        //
+        return view('author.tags.edit' , compact('tag'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    
+    public function update(Request $request, Tag $tag)
     {
-        //
+        $request->validate([
+            'name'=>'required'
+        ]);
+
+        $tag->update([
+            'name' => $request->name
+        ]);
+
+        return redirect('dashboard/tags')->with('message', 'Tag Updated Successfully');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function destroy(Tag $tag)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $tag->delete();
+        
+        return redirect('dashboard/tags')->with('message', 'Tag Deleted Successfully');
     }
 }

@@ -24,7 +24,7 @@
           <label for="" class="block pb-2 text-lg">Category Slug</label>
           <input type="text" class="w-64 h-8 rounded border border-gray-500 pl-3 text-lg" name="slug"  value="{{ old('slug') }}" required>
         </div>
-        <button class="px-12 rounded py-2 bg-green-500 font-bold text-white">Create category</button>
+        <button type="submit" class="px-12 rounded py-2 bg-green-500 font-bold text-white">Create category</button>
     </form>
 </section>
 @endsection
