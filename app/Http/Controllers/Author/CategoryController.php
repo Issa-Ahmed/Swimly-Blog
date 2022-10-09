@@ -3,42 +3,29 @@
 namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryStoreRequest;
+use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-        return view('author.categories.index');
+        $categories = Category::orderByDesc('created_at')->paginate(5);
+        return view('author.categories.index', compact('categories'));
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('author.categories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CategoryStoreRequest $request)
+    public function store(CategoryRequest $request)
     {
-        $slug = strtolower($request->validated('slug'));
+        $slug = Str::slug($request->validated('slug'));
         Category::create([
             'title'=>$request->validated('title'),
             'slug'=>$slug
@@ -47,48 +34,28 @@ class CategoryController extends Controller
         return redirect('dashboard/categories')->with('message', 'Category Created Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit(Category $category)
     {
-        //
+        return view('author.categories.edit', compact('category'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+   
+    public function update(CategoryRequest $request, Category $category)
     {
-        //
+        $slug = Str::slug($request->validated('slug'));
+        $category->update([
+            'title' => $request->validated('title'),
+            'slug' => $slug
+        ]);
+
+        return redirect('dashboard/categories')->with('message', 'Category Updated Successfully');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+   
+    public function destroy(Category $category)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $category->delete();
+        
+        return redirect('dashboard/categories')->with('message', 'Category Deleted Successfully');
     }
 }
