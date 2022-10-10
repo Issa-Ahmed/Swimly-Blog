@@ -23,11 +23,30 @@ class ArticleRequest extends FormRequest
      */
     public function rules()
     {
+
+        if(request()->isMethod('POST'))
+        {
+
+            return [
+                'title'=>'required|unique:articles|max:100',
+                'image'=>'required|image|max:1024',
+                'post'=>'required|min:200', 
+                'category_id'=>'required'
+            ];
+        }
+
+        if(request()->isMethod('PUT'))
+        {
+    
         return [
-            'title'=>'required|unique:articles|max:100',
-            'image'=>'required|image|max:1024',
-            'post'=>'required|min:200', 
-            'category_id'=>'required'
+            'title' => 'required|max:100',
+            'image' => 'image|max:1024',
+            'post' => 'required|min:200',
+            'category_id' => 'required'
         ];
+
+        }
+            
     }
+    
 }

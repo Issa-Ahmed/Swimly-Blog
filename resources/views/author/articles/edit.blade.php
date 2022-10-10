@@ -16,13 +16,17 @@
     </div>
     <form action="{{route('dashboard.articles.update', $article->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="py-4">
           <label for="" class="block pb-2 text-lg">Post Title</label>
           <input type="text" class="w-64 h-8 rounded border border-gray-500 pl-3 text-lg" name="title"  value="{{$article->title}}">
         </div> 
         <div class="py-4">
           <label for="" class="block pb-2 text-lg">Image</label>
-          <input type="file" class="h-8 rounded border" name="image" value="">
+          <input type="file" class="h-8 rounded border" name="image" value="{{$article->image}}">
+        </div>
+        <div class="h-32 w-56">
+          <img src="{{Storage::url($article->image)}}" alt="" class="object-cover w-full h-full">
         </div>
         <div class="py-4">
           <label for="" class="block pb-2 text-lg">Post </label>

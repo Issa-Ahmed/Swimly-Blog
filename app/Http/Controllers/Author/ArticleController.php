@@ -7,8 +7,7 @@ use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
-use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 class ArticleController extends Controller
 {
     
@@ -43,17 +42,12 @@ class ArticleController extends Controller
        return redirect('dashboard/articles')->with('message','Article has been published successfully');
     }
 
-    public function show($id)
+    public function show(Article $article)
     {
-        //
+        return view('author.articles.show', compact('article'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function edit(Article $article)
     {
         $categories = Category::all();
@@ -61,26 +55,36 @@ class ArticleController extends Controller
         return view('author.articles.edit', compact('article','categories','tags'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+   
+    public function update(ArticleRequest $request, Article $article)
     {
-        //
+        $image = $article->image;
+
+        if(request()->hasFile('image')){
+            Storage::delete($image);
+            $image = $request->file('image')->store('public/thumbnails');
+        }
+        $article->update([
+            'user_id' => auth()->user()->id,
+            'title' => $request->title,
+            'image' => $image,
+            'post' => $request->post,
+            'category_id' => $request->category_id
+        ]);
+
+        $tag = Tag::find($request->tag_id);
+        $article->tags()->sync($tag);
+
+        return redirect('dashboard/articles')->with('message', 'Article has been updated successfully');
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+   
+    public function destroy(Article $article)
     {
-        //
+        Storage::delete($article->image);
+        $article->delete();
+
+        return redirect('dashboard/articles')->with('message', 'Article has been deleted successfully');
     }
 }

@@ -42,7 +42,7 @@
                         {{$article->title}}
                     </td>
                     <td class="py-4 px-6">
-                        <a href="" class="hover:text-blue-400 hover:underline transition">
+                        <a href="{{route('dashboard.articles.show', $article->id)}}" class="hover:text-blue-400 hover:underline transition">
                             {{substr($article->post ,0, 100).'...'}}
                         </a>
                     </td>

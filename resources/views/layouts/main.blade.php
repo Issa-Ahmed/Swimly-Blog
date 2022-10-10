@@ -22,9 +22,8 @@
     {{-- Nav Items --}}
     <div>
       <ul class="flex space-x-10">
-        <li>Articles</li>
+        <li><a href="#articles">Articles</a></li>
         <li>About Us</li>
-        <li class="font-semibold">Guest</li>
         @if(auth()->user())
           <form class="cursor-pointer" method="POST" action="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
         @csrf

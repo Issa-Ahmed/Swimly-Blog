@@ -17,14 +17,6 @@
       {{-- Lable --}}
       <h2 class="text-lg font-extralight">Dashboard</h2>
     </x-author-nav-link>
-    <x-author-nav-link :href="route('dashboard.users.index')" :active="request()->routeIs('dashboard.users*')" class="flex items-center space-x-3 mr-2 p-2 hover:bg-teal-500 transition cursor-pointer rounded-md">
-      {{-- Svg icon --}}
-      <div>
-        <svg class="w-5 h-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
-      </div>
-      {{-- Lable --}}
-      <h2 class="text-lg font-extralight">Users</h2>
-    </x-author-nav-link>
     <x-author-nav-link :href="route('dashboard.articles.index')" :active="request()->routeIs('dashboard.articles*')" class="flex items-center space-x-3 mr-2 p-2 hover:bg-teal-500 transition cursor-pointer rounded-md">
       {{-- Svg icon --}}
       <div>

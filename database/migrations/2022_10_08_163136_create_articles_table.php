@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->cascadeOnDelete();
             $table->foreignId('category_id')->cascadeOnDelete();
-            $table->string('title');
+            $table->string('title')->unique();
             $table->string('image')->nullable();
             $table->longText('post');
             $table->timestamps();
