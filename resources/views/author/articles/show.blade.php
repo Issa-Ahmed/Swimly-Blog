@@ -12,7 +12,7 @@
         <h2 class="text-xl pt-2 leading-relaxed tracking-wide font-bold w-3/4">{{$article->title}}</h2>
       </div>
       <div class="px-5 pt-8">
-        <article>{{$article->post}}</article>
+        <article>{!! nl2br($article->post)!!}</article>
       </div>
       <div class="pl-5 py-5 space-y-3">
         <p>Category: <span class="font-semibold">{{$article->category->title}}</span></p>

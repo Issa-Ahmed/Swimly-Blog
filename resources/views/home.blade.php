@@ -1,16 +1,16 @@
 @extends('layouts.main')
 @section('content')
 <section class="overlay bg-fixed h-[calc(100%_-_4rem)] bg-cover bg-center" style="background-image: url({{asset('img/swimming.jpg')}})">
-<div class="ml-12 pt-32  h-full">
-  <h1 class="mb-8 text-4xl text-white font-semibold leading-relaxed tracking-wide w-1/2">Training Hard When You’re Not Feeling Great Will Bring You To A New Level.</h1>
-  <a href="{{route('single-post', $latestPost->title)}}" class="rounded px-12 py-3 bg-teal-500 text-white font-bold">Read the Latest Article</a>
+<div class="md:ml-12 pt-28  h-full">
+  <h1 class="md:mb-12 mb-16 md:text-4xl text-3xl text-white font-semibold md:leading-relaxed leading-relaxed md:tracking-wide tracking-wide w-5/6 md:w-1/2 md:px-0 px-4">Training Hard When You’re Not Feeling Great Will Bring You To A New Level.</h1>
+  <a href="{{route('single-post', $latestPost->title)}}" class="md:ml-0 ml-5 rounded px-12 py-3 bg-teal-500 text-white font-bold">Read the Latest Article</a>
 </div>
 </section>
 
-<section class="h-full">
+<section class="h-fit mb-10">
 <div class="ml-10 pt-6">
   <h2 class="text-3xl text-teal-600">Latest Posts</h2>
-  <div class="grid grid-cols-2 h-96 gap-x-10 mt-6 mr-6">
+  <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-10 mt-6 mr-6">
 
     @foreach ($latestArticles as $latestArticle)    
     <div class="relative flex justify-center overflow-hidden bg-green-200">
